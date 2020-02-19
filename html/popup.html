@@ -1,10 +1,336 @@
 <html>
-    <head>
-        <title>Extension (does not matter)</title>
-    </head>
-    <body>
-        <script src="/js/jquery.min.js"></script>
-        <script src="/js/vue-dev.js"></script>
-        <script src="/js/popup.vue.js"></script>
-    </body>
+<head>
+    <title>Extension (does not matter)</title>
+    <style>
+        body {
+            margin:0;
+            padding:0;
+            width:400px;
+            height: auto;
+        }
+
+        h1 {
+            margin:0;
+            padding:16px 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .fa-issue-scoring {
+            font-size: 0.875rem;
+            color: #181a1b;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            line-height: 1;
+            background: #fff;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            width: 100%;
+        }
+
+        .fa-issue-scoring * {
+            box-sizing: border-box;
+        }
+
+        .fa-form {
+            margin: 0;
+            padding: 0;
+        }
+
+        .fa-form__row {
+            border: 0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #d8dde0;
+        }
+
+        .fa-form__legend {
+            font-size: 0.875rem;
+            font-weight: bold;
+            line-height: 1.25rem;
+            padding-left: 8px;
+            display: inline;
+            flex: 0 1 25%;
+        }
+
+        .fa-form__options {
+            display: flex;
+            justify-content: space-between;
+            flex: 1 0 auto;
+        }
+
+        .fa-form__item {
+            flex: 1 0 25%;
+            text-align: center;
+        }
+
+        .fa-form__control {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .fa-form__label {
+            padding: 8px;
+            display: block;
+            border: 2px solid transparent;
+            text-align: center;
+            cursor: pointer;
+        }
+        .fa-form__control:focus + .fa-form__label {
+            border-color: #dbf2ff;
+        }
+        .fa-form__control:hover + .fa-form__label {
+            border-color: #007abf;
+        }
+        .fa-form__control:checked + .fa-form__label {
+            background: #007abf;
+            color: white;
+        }
+
+        .fa-results {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .fa-results__item {
+            flex: 1 0 50%;
+            display: flex;
+            padding-left: 8px;
+        }
+
+        .fa-results__key {
+            padding-right: 8px;
+        }
+
+        .fa-results__value {
+            font-weight: bold;
+        }
+
+        .fa-form__button {
+            font-size: 0.875rem;
+            align-items: center;
+            background-color: #f5f6f7;
+            border-style: 1px solid #b4bcc1;
+            box-sizing: border-box;
+            color: #0067af;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            font-weight: 700;
+            line-height: 3;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.2s;
+            z-index: 101;
+        }
+    </style>
+</head>
+<body>
+    <div class="fa-issue-scoring">
+        <form class="fa-form">
+            <div class="fa-form__row">
+                <h1>Issue triage scoring</h1>
+            </div>
+            <div class="fa-form__row">
+                <div class="fa-form__legend">Recency</div>
+                <div class="fa-form__options">
+
+                    <div class="fa-form__item">
+                        <input type="radio" id="recency-unknown" name="recency" class="fa-form__control" value="NaN" checked="checked&quot;">
+                        <label class="fa-form__label" for="recency-unknown">
+                            Unknown
+                        </label>
+                    </div>
+
+                    <div class="fa-form__item">
+                        <input type="radio" id="recency-high" name="recency" class="fa-form__control" value="10" "="">
+                        <label class="fa-form__label" for="recency-high">
+                            High
+                        </label>
+                    </div>
+
+                    <div class="fa-form__item">
+                        <input type="radio" id="recency-medium" name="recency" class="fa-form__control" value="5" "="">
+                        <label class="fa-form__label" for="recency-medium">
+                            Medium
+                        </label>
+                    </div>
+
+                    <div class="fa-form__item">
+                        <input type="radio" id="recency-low" name="recency" class="fa-form__control" value="1" "="">
+                        <label class="fa-form__label" for="recency-low">
+                            Low
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="fa-form__row">
+                <div class="fa-form__legend">Reach</div>
+                <div class="fa-form__options">
+
+                    <div class="fa-form__item">
+                        <input type="radio" id="reach-unknown" name="reach" class="fa-form__control" value="NaN" checked="checked&quot;">
+                        <label class="fa-form__label" for="reach-unknown">
+                            Unknown
+                        </label>
+                    </div>
+
+                    <div class="fa-form__item">
+                        <input type="radio" id="reach-high" name="reach" class="fa-form__control" value="5" "="">
+                        <label class="fa-form__label" for="reach-high">
+                            High
+                        </label>
+                    </div>
+
+                    <div class="fa-form__item">
+                        <input type="radio" id="reach-medium" name="reach" class="fa-form__control" value="3" "="">
+                        <label class="fa-form__label" for="reach-medium">
+                            Medium
+                        </label>
+                    </div>
+
+                    <div class="fa-form__item">
+                        <input type="radio" id="reach-low" name="reach" class="fa-form__control" value="0" "="">
+                        <label class="fa-form__label" for="reach-low">
+                            Low
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="fa-form__row">
+                <div class="fa-form__legend">Impact</div>
+                <div class="fa-form__options">
+
+                    <div class="fa-form__item">
+                        <input type="radio" id="impact-unknown" name="impact" class="fa-form__control" value="NaN" checked="checked&quot;">
+                        <label class="fa-form__label" for="impact-unknown">
+                            Unknown
+                        </label>
+                    </div>
+
+                    <div class="fa-form__item">
+                        <input type="radio" id="impact-high" name="impact" class="fa-form__control" value="5" "="">
+                        <label class="fa-form__label" for="impact-high">
+                            High
+                        </label>
+                    </div>
+
+                    <div class="fa-form__item">
+                        <input type="radio" id="impact-medium" name="impact" class="fa-form__control" value="3" "="">
+                        <label class="fa-form__label" for="impact-medium">
+                            Medium
+                        </label>
+                    </div>
+
+                    <div class="fa-form__item">
+                        <input type="radio" id="impact-low" name="impact" class="fa-form__control" value="1" "="">
+                        <label class="fa-form__label" for="impact-low">
+                            Low
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="fa-form__row">
+                <div class="fa-form__legend">Confidence</div>
+                <div class="fa-form__options">
+
+                    <div class="fa-form__item">
+                        <input type="radio" id="confidence-unknown" name="confidence" class="fa-form__control" value="NaN" checked="checked&quot;">
+                        <label class="fa-form__label" for="confidence-unknown">
+                            Unknown
+                        </label>
+                    </div>
+
+                    <div class="fa-form__item">
+                        <input type="radio" id="confidence-high" name="confidence" class="fa-form__control" value="1" "="">
+                        <label class="fa-form__label" for="confidence-high">
+                            High
+                        </label>
+                    </div>
+
+                    <div class="fa-form__item">
+                        <input type="radio" id="confidence-medium" name="confidence" class="fa-form__control" value="0.8" "="">
+                        <label class="fa-form__label" for="confidence-medium">
+                            Medium
+                        </label>
+                    </div>
+
+                    <div class="fa-form__item">
+                        <input type="radio" id="confidence-low" name="confidence" class="fa-form__control" value="0.5" "="">
+                        <label class="fa-form__label" for="confidence-low">
+                            Low
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="fa-form__row">
+                <div class="fa-form__legend">Effort</div>
+                <div class="fa-form__options">
+
+                    <div class="fa-form__item">
+                        <input type="radio" id="effort-unknown" name="effort" class="fa-form__control" value="NaN" checked="checked&quot;">
+                        <label class="fa-form__label" for="effort-unknown">
+                            Unknown
+                        </label>
+                    </div>
+
+                    <div class="fa-form__item">
+                        <input type="radio" id="effort-high" name="effort" class="fa-form__control" value="3" "="">
+                        <label class="fa-form__label" for="effort-high">
+                            High
+                        </label>
+                    </div>
+
+                    <div class="fa-form__item">
+                        <input type="radio" id="effort-medium" name="effort" class="fa-form__control" value="2" "="">
+                        <label class="fa-form__label" for="effort-medium">
+                            Medium
+                        </label>
+                    </div>
+
+                    <div class="fa-form__item">
+                        <input type="radio" id="effort-low" name="effort" class="fa-form__control" value="1" "="">
+                        <label class="fa-form__label" for="effort-low">
+                            Low
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+
+            <dl class="fa-results">
+                <div class="fa-results__item">
+                    <dt class="fa-results__key">Score</dt>
+                    <dt class="fa-results__value" data-show-score="">Unknown</dt>
+                </div>
+                <div class="fa-results__item">
+                    <dt class="fa-results__key">Fix</dt>
+                    <dt class="fa-results__value" data-show-priority="">Unknown</dt>
+                </div>
+            </dl>
+            <button class="fa-form__button">Post Score</button>
+        </form>
+    </div>
+
+    <script src="/js/scoring.js"></script>
+</body>
 </html>
